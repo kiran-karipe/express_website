@@ -5,11 +5,17 @@ var nodemailer = require('nodemailer');
 
 var app = express();
 
+app.set('views', path.join(__dirname, 'views')); // we need to tell jade which folder the template files will be in
+app.set('view engine', 'jade'); // view engine
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
-
+app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', function(req, res) {
-  res.send('Hello World!');
+  res.render('index', {title: 'Welcome'});
+});
+app.get('/about', function(req, res) {
+  res.render('about');
 });
 app.listen(3000);
 console.log('Server is running on port 3000...');
